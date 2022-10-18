@@ -1,5 +1,11 @@
 # XXM_backend_task
- XXM Backend Task
+ XXM Backend Task which involves API Endpoints to execute CRUD operations for Pallet
+ 
+Tech Stack:
+- Programming Language: Python 3.7.7
+- API Framework: FastAPI
+- Database: MongoDB 4.4
+- API Documentation: Swagger Editor (https://editor.swagger.io/)
 
 Steps:
 1. Run virtual env using Python 3.7
