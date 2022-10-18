@@ -15,6 +15,8 @@ Issues:
 2. pymongo BSON encode object
 - Use json dumps & loads (Source: https://stackoverflow.com/questions/7963762/what-is-the-most-economical-way-to-convert-nested-python-objects-to-dictionaries)
 
+3. MongoDB Cluster Accessible IP Address (Security -> Network Access -> Add IP Address)
+
 References:
 1. FastAPI MongoDB REST API in Python | CRUD Operations | Swagger | PyMongo by Mahesh Kariya https://www.youtube.com/watch?v=G7hZlOLhhMY
 2. FastAPI Tutorial - Building RESTful APIs with Python by Amigoscode https://www.youtube.com/watch?v=GN6ICac3OXY

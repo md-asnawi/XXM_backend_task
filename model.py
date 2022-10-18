@@ -10,6 +10,6 @@ class Dimension(BaseModel):
     
 class Pallet(BaseModel):
     id: str
-    display_name: Optional[str]
-    description: Optional[str]
+    display_name: Optional[str] = ''
+    description: Optional[str] = None
     dimensions: Dimension

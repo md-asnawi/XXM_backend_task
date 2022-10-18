@@ -1,0 +1,260 @@
+openapi: "3.0.3"
+info:
+  title: Warehouse Management System
+  description: >-
+    This document describes the API interfaces for the Warehouse Management System (WMS)
+  version: 1.0.1
+tags:
+  - name: Pallets
+    description: API for managing Pallets within the WMS
+paths:
+  /retrieve_pallets:
+    get:
+      tags:
+        - Pallets
+      summary: Retrieve all Pallets
+      description: Retrieves all unique Pallet in the WMS
+      operationId: find_all_pallets
+      responses:
+        '200':
+          description: Successfully retrieved all Pallets
+          content:
+            application/json:
+              schema:
+                # $ref: '#/components/schemas/Pallet'
+                description: Pallet objects
+                type: array
+                items:
+                  type: object
+                  description: Pallet object
+              example:
+                id: pallet_01
+                display_name: Pallet 01
+                description: Most commonly used in Singapore
+                dimensions:
+                  height: 0.12
+                  depth: 1.016
+                  width: 1.219
+                  pallet_height: 0.078
+                  wheel_opening_width: 0.227
+  /retrieve_pallet/{id}:
+    get:
+      tags:
+        - Pallets
+      summary: Retrieve one Pallet using ID
+      description: Retrieve a unique Pallet in the WMS
+      operationId: find_one_pallet
+      responses:
+        '200':
+          description: Successfully retrieved one Pallet with matching ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pallet'
+              example:
+                id: pallet_01
+                display_name: Pallet 01
+                description: Most commonly used in Singapore
+                dimensions:
+                  height: 0.12
+                  depth: 1.016
+                  width: 1.219
+                  pallet_height: 0.078
+                  wheel_opening_width: 0.227
+        '400':
+          description: Pallet ID is invalid, either < 24 characters or not alphanumeric
+          content:
+            application/json:
+              example:
+                detail: ID 1234 is invalid
+        '404':
+          description: No pallet with matching ID found
+          content:
+            application/json:
+              example:
+                detail: Pallet 123456789012345678901234 not found
+    parameters:
+    - name: id
+      in: path
+      description: Unique ID of Pallet
+      required: true
+      schema:
+        type: string
+      style: simple
+  /register_pallet:
+    post:
+      tags:
+        - Pallets
+      summary: Registers a new Pallet
+      description: Registers a unique Pallet in the WMS
+      operationId: create_pallet
+      requestBody:
+        description: Pallet to be registered
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pallet'
+            example:
+                id: pallet_01
+                display_name: Pallet 01
+                description: Most commonly used in Singapore
+                dimensions:
+                  height: 0.12
+                  depth: 1.016
+                  width: 1.219
+                  pallet_height: 0.078
+                  wheel_opening_width: 0.227
+      responses:
+        '201':
+          description: Successfully registered Pallet
+          content:
+            application/json:
+              schema:
+                description: ID of the Pallet
+                type: array
+                items:
+                  type: string
+                  maxLength: 200
+                  description: ID of the Pallet
+              example:
+                id: pallet_01
+        '400':
+          description: A pallet dimension is less than the minimum
+          content:
+            application/json:
+              example:
+                detail: Height -2.0 less than minimum
+  /update_pallet/{id}:
+    put:
+      tags:
+        - Pallets
+      summary: Update one Pallet using ID
+      description: Update a unique Pallet in the WMS
+      operationId: update_one_pallet
+      requestBody:
+        description: Pallet to be registered
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pallet'
+            example:
+                id: pallet_01
+                display_name: Pallet 01
+                description: Most commonly used in Singapore
+                dimensions:
+                  height: 0.12
+                  depth: 1.016
+                  width: 1.219
+                  pallet_height: 0.078
+                  wheel_opening_width: 0.227
+      responses:
+        '204':
+          description: Successfully updated one Pallet with matching ID
+        '400':
+          description: Pallet ID is invalid (either < 24 characters or not alphanumeric) or a pallet dimension is less than the minimum
+          content:
+            application/json:
+              example:
+                detail: ID 1234 is invalid
+        '404':
+          description: No pallet with matching ID found
+          content:
+            application/json:
+              example:
+                detail: Pallet 123456789012345678901234 not found 
+    parameters:
+    - name: id
+      in: path
+      description: Unique ID of Pallet
+      required: true
+      schema:
+        type: string
+      style: simple
+  /delete_pallet/{id}:
+    delete:
+      tags:
+        - Pallets
+      summary: Delete one Pallet using ID
+      description: Delete a unique Pallet in the WMS
+      operationId: delete_one_pallet
+      responses:
+        '204':
+          description: Successfully deleted one Pallet with matching ID
+        '400':
+          description: Pallet ID is invalid, either < 24 characters or not alphanumeric
+          content:
+            application/json:
+              example:
+                detail: ID 1234 is invalid
+        '404':
+          description: No pallet with matching ID found
+          content:
+            application/json:
+              example:
+                detail: Pallet 123456789012345678901234 not found
+    parameters:
+    - name: id
+      in: path
+      description: Unique ID of Pallet
+      required: true
+      schema:
+        type: string
+      style: simple
+components:
+  schemas:
+    Pallet:
+      description: Representation of a supported Pallet
+      type: object
+      properties:
+        id: 
+          description: Unique ID of the Pallet Type
+          type: string
+        display_name:
+          description: Display name of the Pallet Type
+          type: string
+          nullable: true
+          default: null
+        description:
+          description: Brief description of the Pallet Type
+          type: string
+          default: ''
+        dimensions:
+          description: Representation of a Pallet dimension
+          type: object
+          properties:
+            height: 
+              description: The height of the pallet (in metres)
+              type: number
+              format: float
+              minimum: 0.0
+            depth:  
+              description: The depth of the pallet (in metres)
+              type: number
+              format: float
+              minimum: 0.0
+            width:  
+              description: The width of the pallet (in metres)
+              type: number
+              format: float
+              minimum: 0.0
+            pallet_height:  
+              description: The space height in which forklift tines enter the pallet (in metres)
+              type: number
+              format: float
+              minimum: 0.0
+            wheel_opening_width:  
+              description: The space width in which forklift tines enter the pallet (in metres)
+              type: number
+              format: float
+              minimum: 0.0
+          required:
+            - height
+            - depth
+            - width
+            - pallet_height
+            - wheel_opening_width
+      required:
+        - id
+        - dimensions
