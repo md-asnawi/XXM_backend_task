@@ -18,6 +18,7 @@ Steps:
 8. Create .env file with DB_USERNAME and DB_PASSWORD env variables
 9. Start python app using "uvicorn index:app --reload"
 10. Go to http://localhost:8000/docs#/ to test the endpoints
+11. Run "python -m pytest" in terminal to run unit tests
 
 Issues:
 1. Python 3.7.7
