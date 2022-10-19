@@ -21,7 +21,6 @@ paths:
           content:
             application/json:
               schema:
-                # $ref: '#/components/schemas/Pallet'
                 description: Pallet objects
                 type: array
                 items:
@@ -61,12 +60,12 @@ paths:
                   width: 1.219
                   pallet_height: 0.078
                   wheel_opening_width: 0.227
-        '400':
-          description: Pallet ID is invalid, either < 24 characters or not alphanumeric
-          content:
-            application/json:
-              example:
-                detail: ID 1234 is invalid
+        # '400':
+        #   description: Pallet ID is invalid, either < 24 characters or not alphanumeric
+        #   content:
+        #     application/json:
+        #       example:
+        #         detail: ID 1234 is invalid
         '404':
           description: No pallet with matching ID found
           content:
@@ -152,12 +151,12 @@ paths:
       responses:
         '204':
           description: Successfully updated one Pallet with matching ID
-        '400':
-          description: Pallet ID is invalid (either < 24 characters or not alphanumeric) or a pallet dimension is less than the minimum
-          content:
-            application/json:
-              example:
-                detail: ID 1234 is invalid
+        # '400':
+        #   description: Pallet ID is invalid (either < 24 characters or not alphanumeric) or a pallet dimension is less than the minimum
+        #   content:
+        #     application/json:
+        #       example:
+        #         detail: ID 1234 is invalid
         '404':
           description: No pallet with matching ID found
           content:
@@ -182,12 +181,12 @@ paths:
       responses:
         '204':
           description: Successfully deleted one Pallet with matching ID
-        '400':
-          description: Pallet ID is invalid, either < 24 characters or not alphanumeric
-          content:
-            application/json:
-              example:
-                detail: ID 1234 is invalid
+        # '400':
+        #   description: Pallet ID is invalid, either < 24 characters or not alphanumeric
+        #   content:
+        #     application/json:
+        #       example:
+        #         detail: ID 1234 is invalid
         '404':
           description: No pallet with matching ID found
           content:

@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status
 from model import Pallet
 from db import collection
 from schema import pallet_serializer, pallets_serializer
-from bson import ObjectId
+# from bson import ObjectId
 import json
 
 pallet = APIRouter()
@@ -14,10 +14,10 @@ async def find_all_pallets():
 
 @pallet.get('/{id}')
 async def find_one_pallet(id):
-    if len(id) != 24 or not id.isalnum():
-        raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST, detail = f"ID {id} is invalid")
+    # if len(id) != 24 or not id.isalnum():
+    #     raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST, detail = f"ID {id} is invalid")
     try:
-        return pallet_serializer(collection.find_one({"_id": ObjectId(id)}))
+        return pallet_serializer(collection.find_one({"id": id}))
     except:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"Pallet {id} not found")
 
@@ -55,7 +55,7 @@ async def update_pallet(id, pallet: Pallet):
 
     collection.find_one_and_update(
         {
-            "_id": ObjectId(id)
+            "id": id
         },
         {
             "$set": json.loads(json.dumps(pallet, default=lambda o: o.__dict__))
@@ -65,4 +65,4 @@ async def update_pallet(id, pallet: Pallet):
 @pallet.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_one_pallet(id):
     await find_one_pallet(id)
-    collection.find_one_and_delete({"_id": ObjectId(id)})
+    collection.find_one_and_delete({"id": id})
